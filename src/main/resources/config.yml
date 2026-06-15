@@ -14,8 +14,8 @@ settings:
   max-accounts-admin: 3
 
 roles:
-  member-id: ""
-  admin-id: ""
+  member-id: "" # The Discord Role ID given to players after they successfully register via /register
+  admin-id: "" # The Discord Role ID for server staff. Grants permission to bypass quotas and use admin slash commands
 
 # =====================================================================
 # messages
