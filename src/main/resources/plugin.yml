@@ -1,0 +1,6 @@
+name: AuthCord
+version: '${version}'
+
+main: qepron.authCord.AuthCord
+api-version: '26.1.2'
+load: POSTWORLD

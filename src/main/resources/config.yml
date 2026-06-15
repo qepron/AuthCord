@@ -1,0 +1,117 @@
+# =====================================================================
+# AuthCord configuration
+# =====================================================================
+
+settings:
+  discord-token: ""
+  server-id: ""
+  channel-id: ""
+  auth-timeout: 30          # seconds the player has to enter their OTP code
+  max-attempts: 3           # wrong codes / failed sessions before an IP-ban
+  ban-duration: 24          # hours an IP stays banned after max-attempts
+  trust-localhost: false
+  max-accounts-member: 1
+  max-accounts-admin: 3
+
+roles:
+  member-id: ""
+  admin-id: ""
+
+# =====================================================================
+# messages
+#
+# Everything below is OPTIONAL. If a key is missing here, the plugin
+# uses its built-in default. Add/edit only the lines you want to change.
+#
+# Two kinds of messages:
+#
+#  1) IN-GAME messages (seen by players inside Minecraft).
+#     These use MiniMessage formatting: <red>, <green>, <bold>, etc.
+#     Placeholders use <angle_bracket> syntax, e.g. <player>, <ip>, <code>.
+#     Placeholder values are ALWAYS inserted as plain text - you can never
+#     break the formatting by putting weird characters in a username, IP, etc.
+#
+#  2) DISCORD messages (seen in Discord - slash command replies, the
+#     server <-> Discord chat bridge, death/advancement logs).
+#     These use Discord markdown (**bold**, *italic*, etc.), NOT MiniMessage.
+#     Placeholders use %percent% syntax, e.g. %player%, %ip%, %message%.
+# =====================================================================
+messages:
+
+  # ----------------- In-game messages -----------------
+
+  system-activated: "<green>[AuthCord] System successfully loaded and protection is active!</green>"
+
+  ip-banned-broadcast: "<red>Security Alert: Connection from IP <ip> has been blocked due to safety violations.</red>"
+
+  banned-kick-screen: |-
+    <red>You are permanently banned from this network.</red>
+    <gray>Remaining Time: </gray><yellow><time> Minutes</yellow>
+    <gray>Reason: <reason></gray>
+
+  not-registered: "<red>Access Denied! Your account is not whitelisted. Please verify via Discord: /register</red>"
+
+  account-deactivated: "<red>Administrative Action: Your account has been disabled by an administrator.</red>"
+
+  secure-login: "<green>[AuthCord] </green><gray>Recognized secure IP signature. Direct login authorized.</gray>"
+
+  otp-prompt: "<gold>[AuthCord] </gold><yellow>Security Challenge: </yellow><gray>Please enter the verification code sent to your Discord Direct Messages. </gray><red>(<timeout> Seconds remaining)</red>"
+
+  otp-discord-dm: "Your verification code to access the server: <code>"
+
+  verification-timeout: "<red>Session expired! You failed to verify your identity within the safety window.</red>"
+
+  pre-verification-command-error: "<red>Command execution rejected! Complete the safety verification process first.</red>"
+
+  verification-success: "<green><bold>Verified! </bold></green><gray>Identity confirmed, welcome to the network.</gray>"
+
+  wrong-code: "<red>Invalid token entered! </red><yellow>(Remaining Attempts: <attempts>)</yellow>"
+
+  too-many-failed-attempts: "<red>Security Lockdown: Too many invalid authorization tokens submitted.</red>"
+
+  no-permission: "<red>You do not have permission to use this command.</red>"
+
+  cmd-usage: "<red>Usage: /authcord <ban|unban|ipban|unbanip> <target></red>"
+
+  cmd-account-deactivated: "<green>Account <player> deactivated.</green>"
+
+  cmd-account-reactivated: "<green>Account <player> reactivated and bans cleared.</green>"
+
+  cmd-ip-banned: "<green>IP <ip> banned permanently.</green>"
+
+  cmd-ip-unbanned: "<green>IP <ip> unbanned.</green>"
+
+  # The Discord -> Minecraft chat bridge line, shown in-game.
+  # Placeholders: <author> (Discord display name), <message> (Discord message text)
+  discord-bridge-format: "<aqua>[Discord] </aqua><white><author>: <message></white>"
+
+  # ----------------- Discord messages -----------------
+  # These are plain text / Discord markdown - NOT MiniMessage.
+
+  discord-no-permission: "You do not have permission to use this command."
+
+  discord-register-success: "Your account has been registered successfully!"
+
+  discord-register-failed: "Registration failed. That username may already be registered."
+
+  discord-invalid-username: "Invalid Minecraft username: **%input%**. Usernames may only contain letters (a-z, A-Z), numbers, and underscores (_), and must be 3-16 characters long. No spaces or special/accented characters (e.g. ç, ğ, ş, ü) are allowed."
+
+  discord-limit-reached: "You have reached the maximum number of linked accounts."
+
+  discord-ban-success: "Account **%player%** has been banned."
+
+  discord-unban-success: "Account **%player%** has been unbanned and bans cleared."
+
+  discord-ipban-success: "IP **%ip%** has been banned permanently."
+
+  discord-unbanip-success: "IP **%ip%** has been unbanned."
+
+  # The Minecraft -> Discord chat bridge line, shown in Discord.
+  # Placeholders: %player%, %message%
+  discord-chat-format: "**%player%**: %message%"
+
+  # Sent to Discord when a player dies. Placeholders: %player%, %message%
+  discord-death-log: "💀 **%player%** died: %message%"
+
+  # Sent to Discord on advancements. Placeholders: %player%, %advancement%
+  discord-advancement-log: "🏆 **%player%** made advancement [%advancement%]"
