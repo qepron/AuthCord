@@ -4,3 +4,15 @@ version: '${version}'
 main: qepron.authCord.AuthCord
 api-version: '26.1.2'
 load: POSTWORLD
+
+commands:
+  authcord:
+    description: Manage AuthCord account and IP bans.
+    usage: /authcord <ban|unban|ipban|unbanip> <target>
+    permission: authcord.admin
+    permission-message: "&cYou do not have permission to use this command."
+
+permissions:
+  authcord.admin:
+    description: Allows use of /authcord ban|unban|ipban|unbanip
+    default: op

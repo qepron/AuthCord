@@ -26,6 +26,7 @@ import org.bukkit.BanList
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import org.bukkit.event.entity.*
@@ -41,7 +42,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 val mm: MiniMessage = MiniMessage.miniMessage()
 
-class AuthCord : JavaPlugin(), CommandExecutor {
+class AuthCord : JavaPlugin(), CommandExecutor, TabCompleter {
     companion object {
         lateinit var instance: AuthCord
             private set
@@ -98,7 +99,7 @@ class AuthCord : JavaPlugin(), CommandExecutor {
             // the message system entirely with hardcoded mm.deserialize(...)
             // calls. Centralized here for consistency / configurability.
             messages["no-permission"] = "<red>You do not have permission to use this command.</red>"
-            messages["cmd-usage"] = "<red>Usage: /authcord <ban|unban|ipban|unbanip> <target></red>"
+            messages["cmd-usage"] = "<red>Usage: /authcord (ban / unban / ipban / unbanip) [target]</red>"
             messages["cmd-account-deactivated"] = "<green>Account <player> deactivated.</green>"
             messages["cmd-account-reactivated"] = "<green>Account <player> reactivated and bans cleared.</green>"
             messages["cmd-ip-banned"] = "<green>IP <ip> banned permanently.</green>"
@@ -191,6 +192,7 @@ class AuthCord : JavaPlugin(), CommandExecutor {
         SQLManager.connectDB()
 
         getCommand("authcord")?.setExecutor(this)
+        getCommand("authcord")?.tabCompleter = this
 
         Bukkit.getScheduler().runTaskAsynchronously(this, Runnable {
             try {
@@ -281,6 +283,20 @@ class AuthCord : JavaPlugin(), CommandExecutor {
             }
         })
         return true
+    }
+
+    /**
+     * Provides tab-complete suggestions for /authcord. Without this, Paper's
+     * Brigadier-based command system shows no argument suggestions at all for
+     * a plain CommandExecutor, which can make subcommands like "ipban"/"unban"
+     * look like they don't exist even though they work fine when typed manually.
+     */
+    override fun onTabComplete(sender: CommandSender, command: Command, alias: String, args: Array<out String>): List<String> {
+        if (!sender.hasPermission("authcord.admin")) return emptyList()
+        return when (args.size) {
+            1 -> listOf("ban", "unban", "ipban", "unbanip").filter { it.startsWith(args[0].lowercase()) }
+            else -> emptyList()
+        }
     }
 }
 

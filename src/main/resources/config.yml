@@ -71,7 +71,7 @@ messages:
 
   no-permission: "<red>You do not have permission to use this command.</red>"
 
-  cmd-usage: "<red>Usage: /authcord <ban|unban|ipban|unbanip> <target></red>"
+  cmd-usage: "<red>Usage: /authcord (ban / unban / ipban / unbanip) [target]</red>"
 
   cmd-account-deactivated: "<green>Account <player> deactivated.</green>"
 
@@ -94,9 +94,12 @@ messages:
 
   discord-register-failed: "Registration failed. That username may already be registered."
 
-  discord-invalid-username: "Invalid Minecraft username: **%input%**. Usernames may only contain letters (a-z, A-Z), numbers, and underscores (_), and must be 3-16 characters long. No spaces or special/accented characters (e.g. ç, ğ, ş, ü) are allowed."
-
   discord-limit-reached: "You have reached the maximum number of linked accounts."
+
+  # Shown when /register is submitted with a username that doesn't match
+  # vanilla Minecraft naming rules (3-16 chars, letters/digits/underscore only).
+  # Placeholder: %input% (what the user actually typed)
+  discord-invalid-username: "Invalid Minecraft username: **%input%**. Usernames may only contain letters (a-z, A-Z), numbers, and underscores (_), and must be 3-16 characters long. No spaces or special/accented characters (e.g. ç, ğ, ş, ü) are allowed."
 
   discord-ban-success: "Account **%player%** has been banned."
 
